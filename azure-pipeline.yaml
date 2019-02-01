@@ -8,3 +8,5 @@ steps:
 - bash: |
     ./build.sh --distDir="$BUILD_ARTIFACTSTAGINGDIRECTORY" --target="Publish"
   displayName: Publish
+
+- task: PublishBuildArtifacts@1
