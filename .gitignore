@@ -39,8 +39,15 @@ fabric.properties
 
 tools/
 
+### DotNET Core
 obj/
 bin/
 dist/
 
 *.sln.DotSettings.user
+
+### Packer
+
+packer_cache/
+output-virtualbox-iso/
+*.iso

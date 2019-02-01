@@ -6,5 +6,5 @@ steps:
     ./build.sh --distDir $BUILD_ARTIFACTSTAGINGDIRECTORY
   displayName: Cake build
 - bash: |
-    ./build.sh --distDir $BUILD_ARTIFACTSTAGINGDIRECTORY --target="Publish"
+    ./build.sh --distDir="$BUILD_ARTIFACTSTAGINGDIRECTORY" --target="Publish"
   displayName: Publish
