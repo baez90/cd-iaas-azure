@@ -14,11 +14,13 @@ namespace Hackathon
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var urls = Environment.GetEnvironmentVariable("APPLICATION_URLS")?.Split(";") ?? new []{"http://localhost:5000"};
+            CreateWebHostBuilder(args, urls).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args, string[] urls) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls(urls)
                 .UseStartup<Startup>();
     }
 }

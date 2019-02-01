@@ -1,0 +1,53 @@
+{
+    "variables": {
+        "image_name": "hackerthonImage"
+    },
+    "provisioners": [{
+            "type": "shell",
+            "inline": [
+                "sudo mkdir -p /opt/ca/",
+                "sudo useradd -d /nonexistent -M -r -s /bin/false ca",
+                "sudo chown -R $(whoami):$(whoami) /opt/ca"]
+        }, {
+            "type": "file",
+            "source": "./dist",
+            "destination": "/opt/ca/hackathon"
+        },
+        {
+            "type": "file",
+            "source": "./deploy/packer/config/systemd/hackathon.service",
+            "destination": "/tmp/hackathon.service"
+        },
+        {
+            "type": "shell",
+            "scripts": [
+                "./deploy/packer/scripts/setup.sh"
+            ]
+        }
+    ],
+    "builders": [{
+            "type": "azure-arm",
+
+            "client_id": "5e797ef7-38a7-4961-8f93-614b18940c99",
+            "client_secret": "39e60284-a945-4486-89a2-c35698686024",
+            "tenant_id": "93a1a893-ba64-4392-ae8c-d98cad77199c",
+            "subscription_id": "8f5caaee-a2d8-4d9a-a89c-f065af38e8c1",
+
+            "managed_image_resource_group_name": "CD_IaaS",
+            "build_resource_group_name": "CD_IaaS",
+            "managed_image_name": "{{ user `image_name` }}",
+
+            "os_type": "Linux",
+            "image_publisher": "Canonical",
+            "image_offer": "UbuntuServer",
+            "image_sku": "18.04-LTS",
+
+            "azure_tags": {
+                "dept": "ca",
+                "task": "Image deployment"
+            },
+
+            "vm_size": "Standard_DS2_v2"
+        }
+    ]
+}

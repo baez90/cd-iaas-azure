@@ -1,0 +1,13 @@
+[Unit]
+Description=CA Hackathon Sample
+After=network.target
+
+[Service]
+Type=simple
+Environment=APPLICATION_URLS=http://0.0.0.0:5000
+User=ca
+WorkingDirectory=/opt/ca/hackathon
+ExecStart=/opt/ca/hackathon/Hackathon
+
+[Install]
+WantedBy=multi-user.target
