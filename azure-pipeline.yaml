@@ -2,6 +2,10 @@ pool:
   vmImage: ubuntu-16.04
 
 steps:
+- task: DotNetCoreInstaller@0
+  displayName: 'Use .NET Core sdk 2.2.103'
+  inputs:
+    version: 2.2.103
 - bash: |
     ./build.sh
   displayName: Cake build
