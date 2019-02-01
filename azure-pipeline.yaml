@@ -9,7 +9,7 @@ steps:
     ./build.sh --distDir="$(Build.ArtifactStagingDirectory)" --target="Publish"
   displayName: Publish
 
-- task: PublishBuildArtifacts@0
+- task: PublishBuildArtifacts@1
   inputs:
     artifactName: 'dist'
     targetPath: $(Build.ArtifactStagingDirectory)
