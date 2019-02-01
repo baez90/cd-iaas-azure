@@ -12,4 +12,4 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     artifactName: 'dist'
-    targetPath: $(Build.ArtifactStagingDirectory)
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
