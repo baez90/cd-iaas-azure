@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,12 +6,14 @@ namespace Hackathon.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssemblyController :ControllerBase
+    public class AssemblyController : ControllerBase
     {
         [HttpGet("version")]
-        public ActionResult<string> GetVersion()
+        public ActionResult<Version> GetVersion()
         {
-            return "";
+            var version = typeof(AssemblyController).Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+            return Ok(version);
         }
     }
 }

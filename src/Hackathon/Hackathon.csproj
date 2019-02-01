@@ -4,6 +4,8 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
         <IsPackable>true</IsPackable>
+        <LangVersion>7.3</LangVersion>
+        <RuntimeIdentifiers>linux-x64;win10-x64</RuntimeIdentifiers>
     </PropertyGroup>
 
     <ItemGroup>

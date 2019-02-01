@@ -37,10 +37,10 @@ fabric.properties
 !.vscode/launch.json
 !.vscode/extensions.json
 
-src/tools/
+tools/
 
 obj/
-
 bin/
+dist/
 
 *.sln.DotSettings.user

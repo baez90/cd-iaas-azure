@@ -2,13 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackathon", "Hackathon\Hackathon.csproj", "{719702B4-4FCC-4803-9DBA-29152ACD87B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cake", "cake", "{2462B8F5-3D30-4534-9D36-CCA1B3986282}"
-ProjectSection(SolutionItems) = preProject
-	build.cake = build.cake
-	build.ps1 = build.ps1
-	build.sh = build.sh
-EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
