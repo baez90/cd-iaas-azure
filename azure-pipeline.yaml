@@ -3,10 +3,13 @@ pool:
 
 steps:
 - bash: |
-    ./build.sh --distDir="$BUILD_ARTIFACTSTAGINGDIRECTORY"
+    ./build.sh --distDir="$(Build.ArtifactStagingDirectory)"
   displayName: Cake build
 - bash: |
-    ./build.sh --distDir="$BUILD_ARTIFACTSTAGINGDIRECTORY" --target="Publish"
+    ./build.sh --distDir="$(Build.ArtifactStagingDirectory)" --target="Publish"
   displayName: Publish
 
-- task: PublishBuildArtifacts@1
+- task: PublishBuildArtifacts@0
+  inputs:
+    artifactName: 'dist'
+    targetPath: $(Build.ArtifactStagingDirectory)
