@@ -18,4 +18,4 @@ steps:
   inputs:
     azureSubscription: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     templatePath: deploy/packer/Hackerthon.json
-    variables: 'image_name=$(Build.SourceBranchName)-$(Build.SourceVersion)'
+    variables: 'image_name=$(Build.Repository.Name)-$(Build.SourceBranchName)-$(Build.SourceVersion)'
