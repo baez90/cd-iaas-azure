@@ -1,0 +1,6 @@
+pool:
+  vmImage: ubuntu-16.04
+
+- bash: |
+    ./build.sh
+  displayName: Cake build
