@@ -10,5 +10,5 @@ variable "resource_group_name" {
 
 variable "immutable_image_name" {
   description = "The name of the immutable image to deploy to the ScaleSet"
-  default     = "hackerthonImage"
+  default     = "hackathonImage"
 }

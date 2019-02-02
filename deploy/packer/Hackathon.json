@@ -1,6 +1,6 @@
 {
     "variables": {
-        "image_name": "hackerthonImage"
+        "image_name": "hackathonImage"
     },
     "provisioners": [{
             "type": "shell",

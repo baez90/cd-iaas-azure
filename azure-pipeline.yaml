@@ -27,7 +27,7 @@ steps:
   displayName: 'Packer build'
   inputs:
     azureSubscription: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
-    templatePath: deploy/packer/Hackerthon.json
+    templatePath: deploy/packer/Hackathon.json
     variables: 'image_name=Hackathon-$(Build.BuildId)'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
@@ -39,7 +39,7 @@ steps:
   displayName: 'terraform init'
   inputs:
     command: init
-    commandOptions: 'deploy/terraform'
+    workingDirectory: deploy/terraform
     backendType: azurerm
     backendServiceArm: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     backendAzureRmResourceGroupName: 'CD_IaaS'
@@ -52,13 +52,15 @@ steps:
   displayName: 'terraform plan'
   inputs:
     command: plan
+    workingDirectory: deploy/terraform
     environmentServiceName: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
-    commandOptions: '-var "immutable_image_name=Hackathon-$(Build.BuildId)" -out=tfplan deploy/terraform'
+    commandOptions: '-var "immutable_image_name=Hackathon-$(Build.BuildId)" -out=tfplan'
 
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
   displayName: 'terraform apply'
   inputs:
     command: apply
+    workingDirectory: deploy/terraform
     environmentServiceName: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     commandOptions: '-var "immutable_image_name=Hackathon-$(Build.BuildId)" tfplan'
 
