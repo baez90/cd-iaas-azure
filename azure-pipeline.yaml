@@ -30,23 +30,34 @@ steps:
     templatePath: deploy/packer/Hackerthon.json
     variables: 'image_name=Hackathon-$(Build.BuildId)'
 
-- task: tylerevert.Vsts-Release-Terraform.Vsts-Release-Terraform.Terraform@1
-  displayName: 'Terraform plan'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Use Terraform 0.11.11'
   inputs:
-    TemplatePath: deploy/terraform
-    Arguments: plan -out=tfplan
-    InstallTerraform: true
-    ManageState: true
-    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
-    StorageAccountRM: cdiaastfstate
-    StorageContainerName: tfstate
+    terraformVersion: 0.11.11
 
-- task: tylerevert.Vsts-Release-Terraform.Vsts-Release-Terraform.Terraform@1
-  displayName: 'Terraform apply'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform init'
   inputs:
-    TemplatePath: deploy/terraform
-    Arguments: 'apply ./tfplan'
-    ManageState: true
-    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
-    StorageAccountRM: cdiaastfstate
-    StorageContainerName: tfstate
+    command: init
+    backendType: azurerm
+    backendServiceArm: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
+    backendAzureRmResourceGroupName: 'CD_IaaS'
+    backendAzureRmStorageAccountName: cdiaastfstate
+    backendAzureRmContainerName: tfstate
+    backendAzureRmKey: prod.terraform.tfstate
+
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform plan'
+  inputs:
+    command: plan
+    environmentServiceName: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
+    commandOptions: '-var "immutable_image_name=Hackathon-$(Build.BuildId)" -out=tfplan'
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform apply'
+  inputs:
+    command: apply
+    environmentServiceName: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
+    commandOptions: '-var "immutable_image_name=Hackathon-$(Build.BuildId)" tfplan'
+
