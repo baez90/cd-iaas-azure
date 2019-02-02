@@ -39,6 +39,7 @@ steps:
   displayName: 'terraform init'
   inputs:
     command: init
+    commandOptions: 'deploy/terraform'
     backendType: azurerm
     backendServiceArm: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     backendAzureRmResourceGroupName: 'CD_IaaS'
