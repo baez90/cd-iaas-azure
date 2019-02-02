@@ -1,32 +1,25 @@
-#tool "nuget:?package=GitVersion.CommandLine"
-
+#tool nuget:?package=GitVersion.CommandLine&version=4.0.0
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
-
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var distDir = Argument("distDir", "./dist/");
-
 Information($"Running target {target} in configuration {configuration}");
-
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
-
 Task("Clean")
     .Does(() =>
 {
     CleanDirectories("./**/bin");
     CleanDirectories("./**/obj");
 });
-
 Task("Restore")
     .Does(() =>
 {
     DotNetCoreRestore("./src/");
 });
-
 Task("UpdateAssemblyInfo")
     .Does(() =>
 {
@@ -34,7 +27,6 @@ Task("UpdateAssemblyInfo")
         UpdateAssemblyInfo = true
     });
 });
-
 Task("Build")
   .Does(() =>
   {
@@ -42,13 +34,11 @@ Task("Build")
     {
         UpdateAssemblyInfo = false
     });
-
     DotNetCoreBuild("./src/", new DotNetCoreBuildSettings{
         Configuration = configuration,
         ArgumentCustomization = args => args.Append($"--no-restore /p:Version={versionInfo.InformationalVersion}"),
     });
   });
-
 Task("Publish")
     .Does(() =>
     {
@@ -56,9 +46,7 @@ Task("Publish")
         {
             UpdateAssemblyInfo = true
         });
-
         Information($"Setting version to {versionInfo.InformationalVersion}");
-
         DotNetCorePublish("./Hackathon/Hackathon.csproj", new DotNetCorePublishSettings{
             Configuration = configuration,
             OutputDirectory = "./dist/",
@@ -69,7 +57,6 @@ Task("Publish")
             ArgumentCustomization = args => args.Append($"/p:Version={versionInfo.InformationalVersion}"),
         });
     });
-
 Task("Test")
     .Does(() =>
     {
@@ -87,11 +74,9 @@ Task("Test")
                 });
         }
     });
-
 Task("Default")
     .IsDependentOn("Clean")
     .IsDependentOn("Restore")
     .IsDependentOn("Build")
     .IsDependentOn("Test");
-
 RunTarget(target);
