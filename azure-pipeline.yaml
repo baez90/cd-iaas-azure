@@ -30,31 +30,23 @@ steps:
     templatePath: deploy/packer/Hackerthon.json
     variables: 'image_name=Hackathon-$(Build.BuildId)'
 
-- task: petergroenewegen.PeterGroenewegen-Xpirit-Vsts-Release-Terraform.Xpirit-Vsts-Release-Terraform.Terraform@2
-  displayName: 'Terraform plan -var "immutable_image_name=Hackathon-$(Build.BuildId)"'
+- task: tylerevert.Vsts-Release-Terraform.Vsts-Release-Terraform.Terraform@1
+  displayName: 'Terraform plan'
   inputs:
-    TemplatePath: deploy/terraform/
-    Arguments: 'plan -out=tfplan'
+    TemplatePath: deploy/terraform
+    Arguments: plan -out=tfplan
     InstallTerraform: true
-    UseAzureSub: true
-    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     ManageState: true
-    SpecifyStorageAccount: true
-    StorageAccountResourceGroup: 'CD_IaaS'
+    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     StorageAccountRM: cdiaastfstate
     StorageContainerName: tfstate
 
-- task: petergroenewegen.PeterGroenewegen-Xpirit-Vsts-Release-Terraform.Xpirit-Vsts-Release-Terraform.Terraform@2
+- task: tylerevert.Vsts-Release-Terraform.Vsts-Release-Terraform.Terraform@1
   displayName: 'Terraform apply'
   inputs:
-    TemplatePath: deploy/terraform/
-    Arguments: apply -var "immutable_image_name=Hackathon-$(Build.BuildId)"'
-    PlanPath: tfplan
-    UseAzureSub: true
-    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
+    TemplatePath: deploy/terraform
+    Arguments: 'apply ./tfplan'
     ManageState: true
-    SpecifyStorageAccount: true
-    StorageAccountResourceGroup: 'CD_IaaS'
+    ConnectedServiceNameARM: 'Microsoft Azure FHR infca (8f5caaee-a2d8-4d9a-a89c-f065af38e8c1)'
     StorageAccountRM: cdiaastfstate
     StorageContainerName: tfstate
-
