@@ -16,6 +16,6 @@ data "azurerm_resource_group" "vmss" {
 }
 
 data "azurerm_image" "image" {
-  name                = "hackerthonImage"
+  name                = "${var.immutable_image_name}"
   resource_group_name = "${data.azurerm_resource_group.vmss.name}"
 }
