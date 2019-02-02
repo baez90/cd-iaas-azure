@@ -1,5 +1,4 @@
-using System;
-using System.Reflection;
+using Hackathon.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hackathon.Controllers
@@ -9,11 +8,9 @@ namespace Hackathon.Controllers
     public class AssemblyController : ControllerBase
     {
         [HttpGet("version")]
-        public ActionResult<Version> GetVersion()
+        public ActionResult<AppVersionDto> GetVersion()
         {
-            var version = typeof(AssemblyController).Assembly
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
-            return Ok(version);
+            return Ok(new AppVersionDto());
         }
     }
 }
