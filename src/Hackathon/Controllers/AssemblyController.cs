@@ -12,5 +12,11 @@ namespace Hackathon.Controllers
         {
             return Ok(new AppVersionDto());
         }
+
+        [HttpGet("name")]
+        public ActionResult<string> GetAssemblyName()
+        {
+            return Ok(new {typeof(AssemblyController).Assembly.GetName().Name});
+        }
     }
 }
